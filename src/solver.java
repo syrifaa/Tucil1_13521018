@@ -37,15 +37,15 @@ public class solver {
                     listCard = inputKeyboard();
                     lc = strToInt(listCard);
                     // printCard(lc);
-                    // int sum = solver24(lc);
-                    // System.out.println(sum);
+                    int sum = solver24(lc);
+                    System.out.println(sum);
                     break;
                 case "2": // masukkan input random
                     listCard = inputRandom();
                     lc = strToInt(listCard);
                     // printCard(lc);
-                    // sum = solver24(lc);
-                    // System.out.println(sum);
+                    sum = solver24(lc);
+                    System.out.println(sum);
                     break; 
                 default:
                     System.out.println("Pilihan tidak tersedia. Silakan ulangi input.");
@@ -150,5 +150,158 @@ public class solver {
             }
         }
         return lc;
+    }
+
+    public static Double operator(Double card1, Double card2, int op) {
+        Double result = 0.0;
+        if (op == 0) {
+            result = (card1 + card2);
+        }
+        else if (op == 1) {
+            result = (card1 - card2);
+        } 
+        else if (op == 2) {
+            result = (card1 * card2);
+        }
+        else if (op == 3) {
+            result = (card1 / card2);
+        }
+        return result;
+    }
+
+    public static String operatorStr(int card1, int card2, int op) {
+        String result  = "";
+        String cardStr1 = Integer.toString(card1);
+        String cardStr2 = Integer.toString(card2);
+        if (op == 0) {
+            result = "(" + cardStr1 + " + " + cardStr2 + ")";
+        }
+        else if (op == 1) {
+            result = "(" + cardStr1 + " - " + cardStr2 + ")";
+        } 
+        else if (op == 2) {
+            result = "(" + cardStr1 + " * " + cardStr2 + ")";
+        }
+        else if (op == 3) {
+            result = "(" + cardStr1 + " / " + cardStr2 + ")";
+        }
+        return result;
+    }
+
+    public static String operatorStr2(String card1, int card2, int op) {
+        String result  = "";
+        String cardStr2 = Integer.toString(card2);
+        if (op == 0) {
+            result = "(" + card1 + " + " + cardStr2 + ")";
+        }
+        else if (op == 1) {
+            result = "(" + card1 + " - " + cardStr2 + ")";
+        } 
+        else if (op == 2) {
+            result = "(" + card1 + " * " + cardStr2 + ")";
+        }
+        else if (op == 3) {
+            result = "(" + card1 + "/" + cardStr2 + ")";
+        }
+        return result;
+    }
+
+    public static String operatorStr3(int card1, String card2, int op) {
+        String result  = "";
+        String cardStr1 = Integer.toString(card1);
+        if (op == 0) {
+            result = "(" + cardStr1 + " + " + card2 + ")";
+        }
+        else if (op == 1) {
+            result = "(" + cardStr1 + " - " + card2 + ")";
+        } 
+        else if (op == 2) {
+            result = "(" + cardStr1 + " * " + card2 + ")";
+        }
+        else if (op == 3) {
+            result = "(" + cardStr1 + "/" + card2 + ")";
+        }
+        return result;
+    }
+
+    public static String operatorStr4(String card1, String card2, int op) {
+        String result  = "";
+        if (op == 0) {
+            result = "(" + card1 + " + " + card2 + ")";
+        }
+        else if (op == 1) {
+            result = "(" + card1 + " - " + card2 + ")";
+        } 
+        else if (op == 2) {
+            result = "(" + card1 + " * " + card2 + ")";
+        }
+        else if (op == 3) {
+            result = "(" + card1 + "/" + card2 + ")";
+        }
+        return result;
+    }
+
+    public static int solver24(ArrayList<Integer> lc) {
+        int sum = 0;
+
+        Double[] lCard = new Double[lc.size()];
+        for (int i = 0; i < lc.size(); i++) {
+            lCard[i] = (double) lc.get(i);
+        }
+
+        Double result1 = 0.0;
+        Double result2 = 0.0;
+        Double result3 = 0.0;
+        Double result4 = 0.0;
+        String resultStr = "";
+        for (int i = 0; i < lc.size(); i++) {
+            for (int j = 0; j < lc.size(); j++) {
+                for (int k = 0; k < lc.size(); k++) {
+                    for (int l = 0; l < lc.size(); l++) {
+                        for (int a = 0; a < 4; a++) {
+                            for (int b = 0; b < 4; b++) {
+                                for (int c = 0; c < 4; c++) {
+                                    if ((i != j) && (i != k) && (i != l) && (j != k) && (j != l) && (k != l)) {
+
+                                        // ((lCard[i] .. lCard[j]) .. lCard[k]) .. lCard[l]
+                                        result1 = operator(operator(operator(lCard[i], lCard[j], a), lCard[k], b), lCard[l], c);
+                                        if (result1 == 24.00) {
+                                            sum += 1;
+                                            resultStr = operatorStr2(operatorStr2(operatorStr(lc.get(i), lc.get(j), a), lc.get(k), b), lc.get(l), c);
+                                            System.out.println(resultStr);
+                                        }
+
+                                        // (lCard[i] .. (lCard[j] .. lCard[k])) .. lCard[l]
+                                        result2 = operator(operator(lCard[i], operator(lCard[j], lCard[k], b), a), lCard[l], c);
+                                        if (result2 == 24.00) {
+                                            sum += 1;
+                                            resultStr = operatorStr2(operatorStr3(lc.get(i), operatorStr(lc.get(j), lc.get(k), b), a), lc.get(l), c);
+                                            System.out.println(resultStr);
+                                        }
+
+                                        // (lCard[i] .. lCard[j]) .. (lCard[k]) .. lCard[l])
+                                        result3 = operator((operator(lCard[i],lCard[j],a)),(operator(lCard[k],lCard[l],c)),b);
+                                        if (result3 == 24.00) {
+                                            sum += 1;
+                                            resultStr = operatorStr4((operatorStr(lc.get(i),lc.get(j),a)),(operatorStr(lc.get(k),lc.get(l),c)),b);
+                                            System.out.println(resultStr);
+                                        }
+
+                                        // lCard[i] .. ((lCard[j]) .. lCard[k]) .. lCard[l])
+                                        result4 = operator(lCard[i], operator(operator(lCard[j], lCard[k], b), lCard[l], c), a);
+                                        if (result4 == 24.00) {
+                                            sum += 1;
+                                            resultStr = operatorStr3(lc.get(i), operatorStr2(operatorStr(lc.get(j), lc.get(k), b), lc.get(l), c), a);
+                                            System.out.println(resultStr);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return sum;
     }
 }
