@@ -120,32 +120,46 @@ public class solver {
         System.out.println("");
         System.out.println("Masukkan 4 kartu: ");
 
-        String s1 = input.nextLine();
-        while (!validCard(s1)) {
-            System.out.println("Input tidak valid! Masukkan lagi input.");
-            s1 = input.nextLine();
-        }
-        listCard.add(s1);
-        String s2 = input.nextLine();
-        while (!validCard(s2)) {
-            System.out.println("Input tidak valid! Masukkan lagi input.");
-            s2 = input.nextLine();
-        }
-        listCard.add(s2);
-        String s3 = input.nextLine();
-        while (!validCard(s3)) {
-            System.out.println("Input tidak valid! Masukkan lagi input.");
-            s3 = input.nextLine();
-        }
-        listCard.add(s3);
-        String s4 = input.nextLine();
-        while (!validCard(s4)) {
-            System.out.println("Input tidak valid! Masukkan lagi input.");
-            s4 = input.nextLine();
-        }
-        listCard.add(s4);
+        String s = input.nextLine();
+        String[] elements = s.split(" ");
 
-        printCard(listCard);
+        while ((elements.length != 4) || (!validCard(elements[0])) || (!validCard(elements[1])) || (!validCard(elements[2])) || (!validCard(elements[3]))) {
+            System.out.println("Input tidak valid! Masukkan lagi input.");
+            s = input.nextLine();
+            elements = s.split(" ");
+        }
+
+        listCard.add(elements[0]);
+        listCard.add(elements[1]);
+        listCard.add(elements[2]);
+        listCard.add(elements[3]);
+
+        // String s1 = input.nextLine();
+        // while (!validCard(s1)) {
+        //     System.out.println("Input tidak valid! Masukkan lagi input.");
+        //     s1 = input.nextLine();
+        // }
+        // listCard.add(s1);
+        // String s2 = input.nextLine();
+        // while (!validCard(s2)) {
+        //     System.out.println("Input tidak valid! Masukkan lagi input.");
+        //     s2 = input.nextLine();
+        // }
+        // listCard.add(s2);
+        // String s3 = input.nextLine();
+        // while (!validCard(s3)) {
+        //     System.out.println("Input tidak valid! Masukkan lagi input.");
+        //     s3 = input.nextLine();
+        // }
+        // listCard.add(s3);
+        // String s4 = input.nextLine();
+        // while (!validCard(s4)) {
+        //     System.out.println("Input tidak valid! Masukkan lagi input.");
+        //     s4 = input.nextLine();
+        // }
+        // listCard.add(s4);
+
+        // printCard(listCard);
         return listCard;
     }
 
@@ -258,7 +272,7 @@ public class solver {
             result = "(" + card1 + " * " + cardStr2 + ")";
         }
         else if (op == 3) {
-            result = "(" + card1 + "/" + cardStr2 + ")";
+            result = "(" + card1 + " / " + cardStr2 + ")";
         }
         return result;
     }
@@ -276,7 +290,7 @@ public class solver {
             result = "(" + cardStr1 + " * " + card2 + ")";
         }
         else if (op == 3) {
-            result = "(" + cardStr1 + "/" + card2 + ")";
+            result = "(" + cardStr1 + " / " + card2 + ")";
         }
         return result;
     }
@@ -293,7 +307,7 @@ public class solver {
             result = "(" + card1 + " * " + card2 + ")";
         }
         else if (op == 3) {
-            result = "(" + card1 + "/" + card2 + ")";
+            result = "(" + card1 + " / " + card2 + ")";
         }
         return result;
     }
