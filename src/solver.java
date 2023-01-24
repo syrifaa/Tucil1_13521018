@@ -11,6 +11,20 @@ public class solver {
         inputCard();
     }
 
+    public static void splashScreen() {
+        System.out.println("");
+        System.out.println("\033[0;95m" + "   ____________      ____     ____       ________________     _______________     ________  ________     _______________");
+        System.out.println("\033[0;91m" + "  /   ____    /     /   /    /   /      /   ____________/    /   _______    /    /       /_/       /    /              /");
+        System.out.println("\033[0;92m" + " /___/   /   /     /   /____/   /      /  /                 /   /______/   /    /   ___    ___    /    /    __________/");
+        System.out.println("\033[0;96m" + "        /   /     /________    /      /  /  __________     /    ______    /    /   /  /   /  /   /    /    /________");
+        System.out.println("\033[0;94m" + "       /   /              /   /      /  / /    ___   /    /   /      /   /    /   /  /___/  /   /    /             /");
+        System.out.println("\033[0;95m" + "      /   /              /   /      /  / /___/   /  /    /   /      /   /    /   /         /   /    /    _________/");
+        System.out.println("\033[0;96m" + "     /   /              /   /      /  /         /  /    /   /      /   /    /   /         /   /    /    /________");
+        System.out.println("\033[0;91m" + "    /   /_______       /   /      /  /_________/  /    /   /      /   /    /   /         /   /    /             /");
+        System.out.println("\033[0;94m" + "   /___________/      /___/      /_______________/    /___/      /___/    /___/         /___/    /_____________/");
+        System.out.println("\033[0m");
+    }
+
     // menu input
     public static void menu() {
         System.out.println("");
@@ -37,6 +51,7 @@ public class solver {
         boolean flag;
         do {
             flag = false;
+            splashScreen();
             menu();
             String pilihan = input.nextLine();
             switch (pilihan) {
