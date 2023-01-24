@@ -20,7 +20,7 @@ public class save {
     public void saveToFile()  {
         try {
             String tanggal = now();
-            this.file = new File("saveOutput\\solution"+tanggal+".txt");
+            this.file = new File("..\\test\\output\\solution"+tanggal+".txt");
             PrintStream printStream = new PrintStream(this.file);
             System.setOut(printStream);
         } catch (FileNotFoundException e) {
