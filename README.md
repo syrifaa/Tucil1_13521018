@@ -8,12 +8,12 @@ Program ini bertujuan mencari cara untuk mengubah 4 angka random dari kartu sehi
 * Java Virtual Machine.
 
 ## Cara Menggunakan Program
-1. Pastikan Java Virtual Machine udah terpasang pada mesin eksekusi.
+1. Pastikan Java Virtual Machine sudah terpasang pada mesin eksekusi.
 2. Lakukan git clone dari repository ini ke PC anda.
 3. Buka terminal dan masuk ke directory bin atau apabila belum masuk jalankan command `cd bin`.
 4. Jalankan command `java solver` pada terminal dan program akan dimulai.
 
 ## Author
-Nama    : Syarifa Dwi Purnamasari
-NIM     : 13521018
-Kelas   : K03
+* Nama    : Syarifa Dwi Purnamasari
+* NIM     : 13521018
+* Kelas   : K03

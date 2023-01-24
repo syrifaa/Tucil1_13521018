@@ -61,8 +61,8 @@ public class solver {
                     // printCard(lc);
                     long startTime = System.currentTimeMillis();
                     listSolve = solver24(lc);
-                    printSolution(listSolve);
                     long endTime = System.currentTimeMillis();
+                    printSolution(listSolve);
                     long executeTime = (endTime - startTime);
                     System.out.println("Waktu yang diperlukan untuk menghitung solusi " + executeTime + " ms.");
                     break;
@@ -72,8 +72,8 @@ public class solver {
                     // printCard(lc);
                     startTime = System.currentTimeMillis();
                     listSolve = solver24(lc);
-                    printSolution(listSolve);
                     endTime = System.currentTimeMillis();
+                    printSolution(listSolve);
                     executeTime = (endTime - startTime);
                     System.out.println("Waktu yang diperlukan untuk menghitung solusi " + executeTime + " ms.");
                     break; 
