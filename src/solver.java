@@ -11,7 +11,7 @@ public class solver {
         inputCard();
     }
 
-    // menu
+    // menu input
     public static void menu() {
         System.out.println("");
         System.out.println("     SELAMAT DATANG DI 24 GAME SOLVER     ");
@@ -22,13 +22,20 @@ public class solver {
         System.out.print("Masukan pilihan: ");
     }
 
+    // menu output
+    public static void outputOption() {
+        System.out.println("");
+        System.out.println("Apakah ingin menyimpan solusi? (y/n)");
+        System.out.print("Masukan pilihan: ");
+    }
 
     // masukkan input 4 card
     public static void inputCard() {
+        ArrayList<String> listCard = new ArrayList<String>();
+        ArrayList<Integer> lc = new ArrayList<Integer>();
+        ArrayList<String> listSolve = new ArrayList<String>();
         boolean flag;
         do {
-            ArrayList<String> listCard = new ArrayList<String>();
-            ArrayList<Integer> lc = new ArrayList<Integer>();
             flag = false;
             menu();
             String pilihan = input.nextLine();
@@ -37,16 +44,46 @@ public class solver {
                     listCard = inputKeyboard();
                     lc = strToInt(listCard);
                     // printCard(lc);
-                    int sum = solver24(lc);
-                    System.out.println(sum);
+                    long startTime = System.currentTimeMillis();
+                    listSolve = solver24(lc);
+                    printSolution(listSolve);
+                    long endTime = System.currentTimeMillis();
+                    long executeTime = (endTime - startTime);
+                    System.out.println("Waktu yang diperlukan untuk menghitung solusi " + executeTime + " ms.");
                     break;
                 case "2": // masukkan input random
                     listCard = inputRandom();
                     lc = strToInt(listCard);
                     // printCard(lc);
-                    sum = solver24(lc);
-                    System.out.println(sum);
+                    startTime = System.currentTimeMillis();
+                    listSolve = solver24(lc);
+                    printSolution(listSolve);
+                    endTime = System.currentTimeMillis();
+                    executeTime = (endTime - startTime);
+                    System.out.println("Waktu yang diperlukan untuk menghitung solusi " + executeTime + " ms.");
                     break; 
+                default:
+                    System.out.println("Pilihan tidak tersedia. Silakan ulangi input.");
+                    flag = true;
+                    break;
+            }
+        } while (flag);
+        do {
+            flag = false;
+            outputOption();
+            String pilihan = input.nextLine();
+            switch(pilihan) {
+                case "y":
+                    save saver = new save();
+                    saver.saveToFile();
+                    printCard(listCard);
+                    listSolve = solver24(lc);
+                    printSolution(listSolve);
+                    saver.closeFile();
+                    break;
+                case "n":
+                    System.out.println("\nTerima kasih telah menggunakan program ini.");
+                    break;
                 default:
                     System.out.println("Pilihan tidak tersedia. Silakan ulangi input.");
                     flag = true;
@@ -113,13 +150,33 @@ public class solver {
     }
 
     // print card
-    public static void printCard(ArrayList listCard) {
+    public static void printCard(ArrayList<String> listCard) {
         System.out.println("");
         for (int i = 0; i < listCard.size(); i++) { 		      
             System.out.print(listCard.get(i));
             System.out.print(" ");	
         }
         System.out.println("");
+    }
+
+    // print solution
+    public static void printSolution(ArrayList<String> listCard) {
+        for (int i = 0; i < listCard.size(); i++) { 		      
+            System.out.println(listCard.get(i));
+            // System.out.print(" ");	
+        }
+    }
+
+    // menghapus solusi yang sama dalam list
+    public static ArrayList<String> removeSameSol(ArrayList<String> listCard) {
+        for (int d = 0; d < listCard.size()-1; d++) {
+            for (int e = d+1; e < listCard.size(); e++) {
+                if (listCard.get(d).equals(listCard.get(e))) {
+                    listCard.remove(e);
+                }
+            }
+        }
+        return listCard;
     }
 
     // memvalidasi kartu yang diperbolehkan
@@ -241,19 +298,20 @@ public class solver {
         return result;
     }
 
-    public static int solver24(ArrayList<Integer> lc) {
-        int sum = 0;
-
-        Double[] lCard = new Double[lc.size()];
-        for (int i = 0; i < lc.size(); i++) {
-            lCard[i] = (double) lc.get(i);
-        }
+    public static ArrayList<String> solver24(ArrayList<Integer> lc) {
+        ArrayList<String> listCard = new ArrayList<String>();
 
         Double result1 = 0.0;
         Double result2 = 0.0;
         Double result3 = 0.0;
         Double result4 = 0.0;
         String resultStr = "";
+
+        Double[] lCard = new Double[lc.size()];
+        for (int i = 0; i < lc.size(); i++) {
+            lCard[i] = (double) lc.get(i);
+        }
+        
         for (int i = 0; i < lc.size(); i++) {
             for (int j = 0; j < lc.size(); j++) {
                 for (int k = 0; k < lc.size(); k++) {
@@ -266,33 +324,29 @@ public class solver {
                                         // ((lCard[i] .. lCard[j]) .. lCard[k]) .. lCard[l]
                                         result1 = operator(operator(operator(lCard[i], lCard[j], a), lCard[k], b), lCard[l], c);
                                         if (result1 == 24.00) {
-                                            sum += 1;
                                             resultStr = operatorStr2(operatorStr2(operatorStr(lc.get(i), lc.get(j), a), lc.get(k), b), lc.get(l), c);
-                                            System.out.println(resultStr);
+                                            listCard.add(resultStr);
                                         }
 
                                         // (lCard[i] .. (lCard[j] .. lCard[k])) .. lCard[l]
                                         result2 = operator(operator(lCard[i], operator(lCard[j], lCard[k], b), a), lCard[l], c);
                                         if (result2 == 24.00) {
-                                            sum += 1;
                                             resultStr = operatorStr2(operatorStr3(lc.get(i), operatorStr(lc.get(j), lc.get(k), b), a), lc.get(l), c);
-                                            System.out.println(resultStr);
+                                            listCard.add(resultStr);
                                         }
 
                                         // (lCard[i] .. lCard[j]) .. (lCard[k]) .. lCard[l])
                                         result3 = operator((operator(lCard[i],lCard[j],a)),(operator(lCard[k],lCard[l],c)),b);
                                         if (result3 == 24.00) {
-                                            sum += 1;
                                             resultStr = operatorStr4((operatorStr(lc.get(i),lc.get(j),a)),(operatorStr(lc.get(k),lc.get(l),c)),b);
-                                            System.out.println(resultStr);
+                                            listCard.add(resultStr);
                                         }
 
                                         // lCard[i] .. ((lCard[j]) .. lCard[k]) .. lCard[l])
                                         result4 = operator(lCard[i], operator(operator(lCard[j], lCard[k], b), lCard[l], c), a);
                                         if (result4 == 24.00) {
-                                            sum += 1;
                                             resultStr = operatorStr3(lc.get(i), operatorStr2(operatorStr(lc.get(j), lc.get(k), b), lc.get(l), c), a);
-                                            System.out.println(resultStr);
+                                            listCard.add(resultStr);
                                         }
                                     }
                                 }
@@ -302,6 +356,17 @@ public class solver {
                 }
             }
         }
-        return sum;
+
+        listCard = removeSameSol(listCard);
+        listCard = removeSameSol(listCard);
+        listCard = removeSameSol(listCard);
+
+        if (listCard.size() == 0) {
+            System.out.println("Solusi tidak ditemukan");
+        } else {
+            System.out.println("");
+            System.out.println("Solusi ditemukan sebanyak " + listCard.size());
+        }
+        return listCard;
     }
 }
